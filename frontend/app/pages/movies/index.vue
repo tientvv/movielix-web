@@ -142,6 +142,11 @@ watch(sortParam, (newVal) => {
   margin-bottom: var(--space-8);
 }
 
+.movies-grid :deep(.movie-card) {
+  width: 100%;
+  max-width: none;
+}
+
 .skeleton-card {
   width: 100%;
   aspect-ratio: 2/3;

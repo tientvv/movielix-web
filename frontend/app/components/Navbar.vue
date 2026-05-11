@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" :class="{ 'navbar--scrolled': isScrolled || mobileOpen, 'navbar--home': isHomePage }">
+  <nav class="navbar" :class="{ 'navbar--scrolled': isScrolled || mobileOpen, 'navbar--home': isHomePage, 'navbar--menu-open': mobileOpen }">
     <div class="navbar__inner container">
       <NuxtLink to="/" class="navbar__logo" id="nav-logo">
         <img src="/logo.png" alt="MovieLix" class="navbar__logo-img" />
@@ -198,6 +198,10 @@ onMounted(() => {
 .navbar--scrolled {
   background: rgb(5, 5, 5);
   box-shadow: 0 1px 0 var(--color-border);
+}
+
+.navbar--menu-open {
+  box-shadow: none !important;
 }
 
 .navbar__inner {

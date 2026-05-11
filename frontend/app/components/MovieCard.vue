@@ -78,8 +78,7 @@ const qualityLabel = computed(() => {
   text-decoration: none;
   color: var(--color-text-primary);
   flex-shrink: 0;
-  width: 100%;
-  max-width: 220px;
+  width: 180px;
   transition: transform var(--transition-base);
 }
 
@@ -187,9 +186,11 @@ const qualityLabel = computed(() => {
   margin-top: var(--space-1);
 }
 
-@media (max-width: 1024px) {
-  .movie-card {
-    max-width: none;
-  }
+@media (max-width: 768px) {
+  .movie-card { width: 140px; }
+}
+
+@media (max-width: 480px) {
+  .movie-card { width: 120px; }
 }
 </style>
