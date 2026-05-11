@@ -196,7 +196,7 @@ onMounted(() => {
 
 .navbar--home.navbar--scrolled,
 .navbar--scrolled {
-  background: rgba(5, 5, 5, 0.95);
+  background: rgb(5, 5, 5);
   box-shadow: 0 1px 0 var(--color-border);
 }
 
@@ -530,7 +530,7 @@ onMounted(() => {
     background: linear-gradient(to bottom, rgba(5, 5, 5, 0.8) 0%, transparent 100%);
   }
   .navbar--scrolled {
-    background: rgba(5, 5, 5, 0.95);
+    background: rgb(5, 5, 5);
   }
   .navbar__links {
     display: none;
