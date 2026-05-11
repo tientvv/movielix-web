@@ -3,15 +3,8 @@ export default defineNuxtRouteMiddleware((to) => {
   if (to.path === '/login') {
     const authToken = useCookie<string | null>('auth_token');
     if (authToken.value) {
-      return navigateTo('/');
-    }
-  }
-
-  // Redirect logged-in admins away from admin login page
-  if (to.path === '/admin/login') {
-    const adminToken = useCookie<string | null>('admin_token');
-    if (adminToken.value) {
-      return navigateTo('/admin');
+      const redirect = to.query.redirect as string;
+      return navigateTo(redirect || '/');
     }
   }
 });

@@ -1,32 +1,27 @@
 export function useAdminAuth() {
-  const adminToken = useCookie<string | null>('admin_token', { maxAge: 86400, path: '/' });
+  const auth = useAuth();
 
-  const isAdminLoggedIn = computed(() => !!adminToken.value);
-
-  function getToken(): string {
-    return adminToken.value || '';
-  }
+  const isAdmin = computed(() => auth.isLoggedIn.value && auth.user.value?.role === 'ADMIN');
 
   function authHeaders(): Record<string, string> {
-    return { Authorization: `Bearer ${getToken()}` };
+    return { Authorization: `Bearer ${auth.token.value}` };
   }
 
   function requireAuth(): boolean {
-    if (!adminToken.value) {
-      navigateTo('/admin/login');
+    if (!auth.isLoggedIn.value) {
+      navigateTo('/login?redirect=/admin');
+      return false;
+    }
+    if (auth.user.value?.role !== 'ADMIN') {
+      navigateTo('/');
       return false;
     }
     return true;
   }
 
-  function login(token: string) {
-    adminToken.value = token;
-  }
-
   function logout() {
-    adminToken.value = null;
-    navigateTo('/admin/login');
+    auth.logout();
   }
 
-  return { getToken, authHeaders, requireAuth, isAdminLoggedIn, login, logout };
+  return { isAdmin, authHeaders, requireAuth, logout, token: auth.token, user: auth.user };
 }
