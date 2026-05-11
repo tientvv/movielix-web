@@ -134,30 +134,15 @@ onMounted(() => {
   width: 100%;
   height: var(--navbar-height);
   z-index: 1000;
-  background: transparent;
+  background-color: transparent;
+  transition:
+    background-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
-.navbar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(5, 5, 5, 0.95);
+.navbar--scrolled {
+  background-color: rgba(5, 5, 5, 0.95);
   box-shadow: 0 1px 0 var(--color-border);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.navbar--scrolled::before {
-  opacity: 1;
-}
-
-/* Only apply blur on devices that can handle it */
-@media (min-width: 769px) {
-  .navbar::before {
-    backdrop-filter: blur(16px) saturate(180%);
-  }
 }
 
 .navbar__inner {
