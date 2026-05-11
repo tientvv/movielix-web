@@ -74,7 +74,14 @@
               <span class="navbar__mobile-user-name">{{ auth.user.value?.username }}</span>
               <span class="navbar__mobile-user-role">{{ auth.user.value?.role }}</span>
             </div>
-            <button class="navbar__mobile-logout-btn" @click="auth.logout(); mobileOpen = false" title="Logout">
+            <button
+              class="navbar__mobile-logout-btn"
+              @click="
+                auth.logout();
+                mobileOpen = false;
+              "
+              title="Logout"
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
@@ -178,7 +185,9 @@ onMounted(() => {
   height: var(--navbar-height);
   z-index: 1000;
   background: rgba(5, 5, 5, 0.95);
-  transition: background var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    background var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 .navbar--home {
@@ -215,7 +224,7 @@ onMounted(() => {
 }
 
 .navbar__logo-img {
-  height: 32px;
+  height: 160px;
   width: auto;
   object-fit: contain;
   transition: opacity var(--transition-fast);
