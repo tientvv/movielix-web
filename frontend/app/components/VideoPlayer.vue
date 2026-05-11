@@ -60,12 +60,19 @@ onMounted(async () => {
     theme: '#F5C518',
     lang: 'en',
     subtitleOffset: true,
-    fastForward: false, // Disables sliding left/right to seek on mobile
+    fastForward: false, // Disables double tap fast forward
+    lock: true, // Adds a lock button on mobile to prevent accidental touches
+    autoOrientation: true, // Auto rotates on fullscreen
+    playsInline: true,
     moreVideoAttr: {
       crossOrigin: 'anonymous',
       playsInline: true,
     },
   };
+  
+  // Disable swipe-to-seek completely using Artplayer's private config if gesture: false isn't enough,
+  // but gesture: false disables brightness/volume/seek swiping on mobile.
+  options.gesture = false;
 
   // Add subtitles if provided
   if (props.subtitles?.length) {

@@ -30,7 +30,7 @@
         </div>
 
         <p class="hero__overview" id="hero-overview">
-          {{ truncateText(movie?.overview || movie?.overviewVi || '', 200) }}
+          {{ truncateText(movie?.overview || movie?.overviewVi || 'This movie does not have a description yet.', 200) }}
           <button
             v-if="(movie?.overview || '').length > 200"
             class="hero__see-more"
@@ -225,15 +225,36 @@ function truncateText(text: string, maxLength: number): string {
   flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .hero { min-height: 60vh; }
   .hero__info { max-width: 100%; }
   .hero__vignette {
     background: linear-gradient(to right, rgba(5,5,5,0.6) 0%, transparent 80%);
   }
   .hero__backdrop-img {
-    /* Prevent oversize image rendering on mobile */
     image-rendering: auto;
+  }
+  .hero__content {
+    padding-top: calc(var(--navbar-height) + var(--space-8));
+    padding-bottom: var(--space-8);
+  }
+  .hero__title {
+    font-size: var(--text-3xl);
+    line-height: 1.2;
+    margin-bottom: var(--space-3);
+  }
+  .hero__overview {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-6);
+  }
+  .hero__actions .btn-lg {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+  }
+}
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: var(--text-2xl);
   }
 }
 </style>

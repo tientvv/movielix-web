@@ -69,7 +69,6 @@
 
         <template v-if="auth.isLoggedIn.value">
           <div class="navbar__mobile-user">
-            <div class="navbar__mobile-avatar">{{ auth.user.value?.username?.charAt(0).toUpperCase() }}</div>
             <div class="navbar__mobile-user-info">
               <span class="navbar__mobile-user-name">{{ auth.user.value?.username }}</span>
               <span class="navbar__mobile-user-role">{{ auth.user.value?.role }}</span>
@@ -438,19 +437,6 @@ onMounted(() => {
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
-}
-
-.navbar__mobile-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-accent), #e6a800);
-  color: #000;
-  font-weight: 700;
-  font-size: var(--text-base);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .navbar__mobile-user-info {
