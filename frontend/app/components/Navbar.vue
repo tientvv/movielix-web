@@ -525,9 +525,12 @@ onMounted(() => {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .navbar {
     background: linear-gradient(to bottom, rgba(5, 5, 5, 0.8) 0%, transparent 100%);
+  }
+  .navbar--scrolled {
+    background: rgba(5, 5, 5, 0.95);
   }
   .navbar__links {
     display: none;
