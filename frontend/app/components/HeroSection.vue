@@ -129,9 +129,6 @@ function truncateText(text: string, maxLength: number): string {
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  /* GPU accelerate image rendering */
-  will-change: transform;
-  transform: translateZ(0);
 }
 
 .hero__gradient {

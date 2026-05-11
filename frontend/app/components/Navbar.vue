@@ -131,15 +131,13 @@ onMounted(() => {
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
   height: var(--navbar-height);
   z-index: 1000;
   background: transparent;
   transition:
     background var(--transition-base),
     box-shadow var(--transition-base);
-  /* GPU acceleration for smooth scroll on mobile */
-  will-change: background;
-  transform: translateZ(0);
 }
 
 .navbar--scrolled {
