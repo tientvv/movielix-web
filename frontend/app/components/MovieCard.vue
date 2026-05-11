@@ -150,13 +150,12 @@ const qualityLabel = computed(() => {
   position: absolute;
   top: var(--space-2);
   left: var(--space-2);
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.85);
   color: var(--color-text-primary);
   font-size: var(--text-xs);
   font-weight: 600;
   padding: 2px 8px;
   border-radius: var(--radius-sm);
-  backdrop-filter: blur(4px);
 }
 
 .movie-card__quality {

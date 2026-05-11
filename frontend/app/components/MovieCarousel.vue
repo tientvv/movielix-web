@@ -85,9 +85,6 @@ onMounted(() => {
 <style scoped>
 .carousel-section {
   padding: var(--space-8) 0 var(--space-4);
-  /* Skip rendering offscreen carousels — huge mobile perf win */
-  content-visibility: auto;
-  contain-intrinsic-size: auto 340px;
 }
 
 .carousel-section__header {
