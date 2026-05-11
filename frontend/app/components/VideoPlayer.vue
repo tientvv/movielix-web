@@ -190,6 +190,29 @@ onMounted(async () => {
       {
         name: 'episodesPanel',
         html: layerHtml,
+        click: function (layer: HTMLElement, e: Event) {
+          const target = e.target as HTMLElement;
+          
+          const epEl = target.closest('.art-episode-item');
+          if (epEl) {
+            const epId = epEl.getAttribute('data-ep-id');
+            if (epId) {
+              const selectedEp = props.episodes?.find((ep: any) => ep.id === epId);
+              if (selectedEp && selectedEp.id !== props.currentEpisode?.id) {
+                emit('episode-change', selectedEp);
+                const panel = player?.template.$player.querySelector('.art-episodes-panel') as HTMLElement;
+                if (panel) panel.style.display = 'none';
+              }
+            }
+            return;
+          }
+
+          const closeBtn = target.closest('.art-ep-close');
+          if (closeBtn) {
+            const panel = player?.template.$player.querySelector('.art-episodes-panel') as HTMLElement;
+            if (panel) panel.style.display = 'none';
+          }
+        }
       }
     ];
 
@@ -227,33 +250,9 @@ onMounted(async () => {
     console.error('[VideoPlayer] Error:', err);
   });
 
-  // Attach episode click listener
-  if (props.isTvSeries) {
-    const { $player } = player.template;
-    $player.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      
-      const epEl = target.closest('.art-episode-item');
-      if (epEl) {
-        const epId = epEl.getAttribute('data-ep-id');
-        if (epId) {
-          const selectedEp = props.episodes?.find((ep: any) => ep.id === epId);
-          if (selectedEp && selectedEp.id !== props.currentEpisode?.id) {
-             emit('episode-change', selectedEp);
-             const panel = $player.querySelector('.art-episodes-panel') as HTMLElement;
-             if (panel) panel.style.display = 'none';
-          }
-        }
-        return;
-      }
-
-      const closeBtn = target.closest('.art-ep-close');
-      if (closeBtn) {
-        const panel = $player.querySelector('.art-episodes-panel') as HTMLElement;
-        if (panel) panel.style.display = 'none';
-      }
-    });
-  }
+  player.on('error', (err: any) => {
+    console.error('[VideoPlayer] Error:', err);
+  });
 });
 
 // Watch for src changes (from polling — stream becomes ready after initial render)
