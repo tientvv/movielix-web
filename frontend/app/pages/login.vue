@@ -59,12 +59,10 @@ const password = ref('');
 const error = ref('');
 const isLoading = ref(false);
 
-// If already logged in, redirect
-onMounted(() => {
-  if (auth.isLoggedIn.value) {
-    navigateTo('/');
-  }
-});
+// If already logged in, redirect immediately (no flash)
+if (auth.isLoggedIn.value) {
+  navigateTo('/');
+}
 
 async function handleLogin() {
   error.value = '';

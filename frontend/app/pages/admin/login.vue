@@ -54,10 +54,17 @@ definePageMeta({ layout: false });
 
 useHead({ title: 'Admin Login — MovieLix' });
 
+const { isAdminLoggedIn, login: adminLogin } = useAdminAuth();
+
 const username = ref('');
 const password = ref('');
 const error = ref('');
 const isLoading = ref(false);
+
+// Redirect if already logged in
+if (isAdminLoggedIn.value) {
+  navigateTo('/admin');
+}
 
 async function handleLogin() {
   error.value = '';
@@ -69,15 +76,10 @@ async function handleLogin() {
       body: { username: username.value, password: password.value },
     });
 
-    localStorage.setItem('admin_token', res.token);
+    adminLogin(res.token);
     navigateTo('/admin');
   } catch (err: any) {
-    const statusCode = err?.response?.status || err?.statusCode;
-    if (statusCode === 403) {
-      error.value = 'Access denied. Admin privileges required.';
-    } else {
-      error.value = 'Invalid username or password';
-    }
+    error.value = 'Invalid username or password';
   } finally {
     isLoading.value = false;
   }
