@@ -30,6 +30,20 @@ const emit = defineEmits(['episode-change']);
 const playerContainer = ref<HTMLElement | null>(null);
 let player: Artplayer | null = null;
 
+const getProgressKey = () => `video_progress_${props.currentEpisode?.id || props.playerId || props.src}`;
+
+function restoreProgress() {
+  if (!player || !player.video) return;
+  const savedTime = localStorage.getItem(getProgressKey());
+  if (savedTime) {
+    const time = parseFloat(savedTime);
+    // Only resume if valid and not too close to the end
+    if (time > 0 && (!player.duration || time < player.duration - 10)) {
+      player.currentTime = time;
+    }
+  }
+}
+
 onMounted(async () => {
 
   if (!playerContainer.value) return;
@@ -248,8 +262,6 @@ onMounted(async () => {
     return;
   }
 
-  const getProgressKey = () => `video_progress_${props.currentEpisode?.id || props.playerId || props.src}`;
-
   player.on('ready', () => {
     player?.play().catch(() => {});
   });
@@ -260,16 +272,7 @@ onMounted(async () => {
     }
   });
 
-  player.on('video:loadedmetadata', () => {
-    const savedTime = localStorage.getItem(getProgressKey());
-    if (savedTime && player && player.video) {
-      const time = parseFloat(savedTime);
-      // Only resume if valid and not too close to the end
-      if (time > 0 && (!player.duration || time < player.duration - 10)) {
-        player.currentTime = time;
-      }
-    }
-  });
+  player.on('video:loadedmetadata', restoreProgress);
 
   player.on('error', (err: any) => {
     console.error('Artplayer error:', err);
@@ -285,6 +288,7 @@ watch(
     player
       .switchUrl(newSrc)
       .then(() => {
+        restoreProgress();
         player?.play().catch(() => {});
       })
       .catch(() => {

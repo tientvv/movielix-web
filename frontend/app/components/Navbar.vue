@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" :class="{ 'navbar--scrolled': isScrolled || mobileOpen, 'navbar--home': isHomePage, 'navbar--menu-open': mobileOpen }">
+  <nav ref="navbarRef" class="navbar" :class="{ 'navbar--scrolled': isScrolled || mobileOpen, 'navbar--home': isHomePage, 'navbar--menu-open': mobileOpen }">
     <div class="navbar__inner container">
       <NuxtLink to="/" class="navbar__logo" id="nav-logo">
         <img src="/logo.png" alt="MovieLix" class="navbar__logo-img" />
@@ -71,7 +71,6 @@
           <div class="navbar__mobile-user">
             <div class="navbar__mobile-user-info">
               <span class="navbar__mobile-user-name">{{ auth.user.value?.username }}</span>
-              <span class="navbar__mobile-user-role">{{ auth.user.value?.role }}</span>
             </div>
             <button
               class="navbar__mobile-logout-btn"
@@ -137,6 +136,7 @@ const mobileOpen = ref(false);
 const searchOpen = ref(false);
 const searchQuery = ref('');
 const searchInput = ref<HTMLInputElement | null>(null);
+const navbarRef = ref<HTMLElement | null>(null);
 
 const auth = useAuth();
 const route = useRoute();
@@ -170,7 +170,18 @@ onMounted(() => {
     }
   };
   window.addEventListener('scroll', handleScroll, { passive: true });
-  onUnmounted(() => window.removeEventListener('scroll', handleScroll));
+  
+  const closeMobileMenu = (e: MouseEvent) => {
+    if (mobileOpen.value && navbarRef.value && !navbarRef.value.contains(e.target as Node)) {
+      mobileOpen.value = false;
+    }
+  };
+  document.addEventListener('click', closeMobileMenu);
+  
+  onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+    document.removeEventListener('click', closeMobileMenu);
+  });
 });
 </script>
 
