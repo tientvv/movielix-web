@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" :class="{ 'navbar--scrolled': isScrolled, 'navbar--home': isHomePage }">
+  <nav class="navbar" :class="{ 'navbar--scrolled': isScrolled || mobileOpen, 'navbar--home': isHomePage }">
     <div class="navbar__inner container">
       <NuxtLink to="/" class="navbar__logo" id="nav-logo">
         <img src="/logo.png" alt="MovieLix" class="navbar__logo-img" />
@@ -74,15 +74,14 @@
               <span class="navbar__mobile-user-name">{{ auth.user.value?.username }}</span>
               <span class="navbar__mobile-user-role">{{ auth.user.value?.role }}</span>
             </div>
+            <button class="navbar__mobile-logout-btn" @click="auth.logout(); mobileOpen = false" title="Logout">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
           </div>
-          <button class="navbar__mobile-link navbar__mobile-logout" @click="auth.logout(); mobileOpen = false">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-              <polyline points="16 17 21 12 16 7"></polyline>
-              <line x1="21" y1="12" x2="9" y2="12"></line>
-            </svg>
-            Logout
-          </button>
         </template>
         <NuxtLink v-else to="/login" class="navbar__mobile-link navbar__mobile-signin" @click="mobileOpen = false">
           Sign In
@@ -238,7 +237,7 @@ onMounted(() => {
   padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
   cursor: pointer;
@@ -291,7 +290,7 @@ onMounted(() => {
   border-radius: var(--radius-full);
   background: none;
   border: none;
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -325,7 +324,7 @@ onMounted(() => {
 
 .navbar__logout-btn {
   padding: 4px;
-  color: var(--color-text-muted);
+  color: var(--color-text-primary);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -461,15 +460,25 @@ onMounted(() => {
   letter-spacing: 0.05em;
 }
 
-.navbar__mobile-logout {
+.navbar__mobile-logout-btn {
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  color: var(--color-text-muted) !important;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.navbar__mobile-logout:hover {
-  color: var(--color-error) !important;
+.navbar__mobile-logout-btn:hover {
+  color: var(--color-error);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
 }
 
 .navbar__mobile-signin {
