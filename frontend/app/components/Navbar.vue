@@ -64,6 +64,29 @@
       <div v-if="mobileOpen" class="navbar__mobile-menu">
         <NuxtLink to="/" class="navbar__mobile-link" @click="mobileOpen = false">New Movie</NuxtLink>
         <NuxtLink to="/movies" class="navbar__mobile-link" @click="mobileOpen = false">Movie</NuxtLink>
+
+        <div class="navbar__mobile-divider"></div>
+
+        <template v-if="auth.isLoggedIn.value">
+          <div class="navbar__mobile-user">
+            <div class="navbar__mobile-avatar">{{ auth.user.value?.username?.charAt(0).toUpperCase() }}</div>
+            <div class="navbar__mobile-user-info">
+              <span class="navbar__mobile-user-name">{{ auth.user.value?.username }}</span>
+              <span class="navbar__mobile-user-role">{{ auth.user.value?.role }}</span>
+            </div>
+          </div>
+          <button class="navbar__mobile-link navbar__mobile-logout" @click="auth.logout(); mobileOpen = false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Logout
+          </button>
+        </template>
+        <NuxtLink v-else to="/login" class="navbar__mobile-link navbar__mobile-signin" @click="mobileOpen = false">
+          Sign In
+        </NuxtLink>
       </div>
     </Transition>
 
@@ -152,7 +175,7 @@ onMounted(() => {
   width: 100%;
   height: var(--navbar-height);
   z-index: 1000;
-  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.8) 0%, transparent 100%);
+  background: transparent;
   transition: background var(--transition-base), box-shadow var(--transition-base);
 }
 
@@ -386,6 +409,66 @@ onMounted(() => {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.navbar__mobile-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--space-2) 0;
+}
+
+.navbar__mobile-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+}
+
+.navbar__mobile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-accent), #e6a800);
+  color: #000;
+  font-weight: 700;
+  font-size: var(--text-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__mobile-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar__mobile-user-name {
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+}
+
+.navbar__mobile-user-role {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.navbar__mobile-logout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted) !important;
+}
+
+.navbar__mobile-logout:hover {
+  color: var(--color-error) !important;
+}
+
+.navbar__mobile-signin {
+  color: var(--color-accent) !important;
+  font-weight: 600;
+}
+
 /* Transitions */
 .search-overlay-enter-active {
   transition: opacity 200ms ease;
@@ -419,6 +502,9 @@ onMounted(() => {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .navbar {
+    background: linear-gradient(to bottom, rgba(5, 5, 5, 0.8) 0%, transparent 100%);
+  }
   .navbar__links {
     display: none;
   }
@@ -430,6 +516,9 @@ onMounted(() => {
   }
   .navbar__mobile-menu {
     display: flex;
+  }
+  .navbar__user-menu {
+    display: none;
   }
 }
 </style>
