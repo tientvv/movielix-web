@@ -6,8 +6,9 @@
       </NuxtLink>
 
       <div class="navbar__links" id="nav-links">
-        <NuxtLink to="/" class="navbar__link" active-class="navbar__link--active"> New Movie </NuxtLink>
-        <NuxtLink to="/movies" class="navbar__link" active-class="navbar__link--active"> Movie </NuxtLink>
+        <NuxtLink to="/" class="navbar__link" active-class="navbar__link--active"> Home </NuxtLink>
+        <NuxtLink to="/movies" class="navbar__link" active-class="navbar__link--active"> Movies </NuxtLink>
+        <NuxtLink to="/movies?type=TV_SERIES" class="navbar__link" active-class="navbar__link--active"> Series </NuxtLink>
       </div>
 
       <div class="navbar__actions">
@@ -62,8 +63,9 @@
     <!-- Mobile menu -->
     <Transition name="mobile-menu">
       <div v-if="mobileOpen" class="navbar__mobile-menu">
-        <NuxtLink to="/" class="navbar__mobile-link" @click="mobileOpen = false">New Movie</NuxtLink>
-        <NuxtLink to="/movies" class="navbar__mobile-link" @click="mobileOpen = false">Movie</NuxtLink>
+        <NuxtLink to="/" class="navbar__mobile-link" @click="mobileOpen = false">Home</NuxtLink>
+        <NuxtLink to="/movies" class="navbar__mobile-link" @click="mobileOpen = false">Movies</NuxtLink>
+        <NuxtLink to="/movies?type=TV_SERIES" class="navbar__mobile-link" @click="mobileOpen = false">Series</NuxtLink>
       </div>
     </Transition>
 
@@ -200,7 +202,6 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  margin-left: auto;
 }
 
 .navbar__link {
@@ -248,7 +249,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-left: var(--space-4);
+  margin-left: auto;
 }
 
 .navbar__search-btn {
@@ -369,7 +370,7 @@ onMounted(() => {
   display: none;
   flex-direction: column;
   padding: var(--space-4);
-  background: rgba(5, 5, 5, 0.95);
+  background: rgba(11, 14, 20, 0.95);
   backdrop-filter: blur(16px);
   border-top: 1px solid var(--color-border);
 }
