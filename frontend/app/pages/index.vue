@@ -85,6 +85,7 @@ onMounted(async () => {
 
 <style scoped>
 .home-page {
+  margin-top: calc(-1 * var(--navbar-height));
   padding-bottom: var(--space-16);
 }
 
