@@ -123,9 +123,11 @@
 <script setup lang="ts">
 import type { Movie, Episode, VideoSource } from '~/types/movie';
 import { QUALITY_MAP } from '~/types/movie';
+import { useAuth } from '~/composables/useAuth';
 
 const route = useRoute();
 const config = useRuntimeConfig();
+const auth = useAuth();
 
 const movie = ref<Movie | null>(null);
 const streamUrl = ref('');
@@ -183,6 +185,10 @@ function selectEpisode(ep: any) {
 }
 
 function handleEpisodeChangeFromPlayer(ep: any) {
+  if (!auth.requireAuth(route.fullPath)) {
+    return;
+  }
+
   selectedEpisode.value = ep;
   selectedSeason.value = ep.season;
   
@@ -203,6 +209,10 @@ function handleEpisodeChangeFromPlayer(ep: any) {
 }
 
 function playVideo() {
+  if (!auth.requireAuth(route.fullPath)) {
+    return;
+  }
+
   const source =
     activeVideoSources.value.find((vs: any) => vs.quality === selectedQuality.value) || activeVideoSources.value[0];
 

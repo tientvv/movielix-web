@@ -42,6 +42,20 @@
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
+
+        <div class="navbar__user-menu">
+          <NuxtLink v-if="!auth.isLoggedIn.value" to="/login" class="btn btn-primary btn-sm">Sign In</NuxtLink>
+          <div v-else class="navbar__user-profile">
+            <span class="navbar__username">{{ auth.user.value?.username }}</span>
+            <button @click="auth.logout()" class="navbar__logout-btn" title="Logout">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -88,11 +102,15 @@
 </template>
 
 <script setup lang="ts">
+import { useAuth } from '~/composables/useAuth';
+
 const isScrolled = ref(false);
 const mobileOpen = ref(false);
 const searchOpen = ref(false);
 const searchQuery = ref('');
 const searchInput = ref<HTMLInputElement | null>(null);
+
+const auth = useAuth();
 
 function toggleSearch() {
   searchOpen.value = !searchOpen.value;
@@ -252,6 +270,43 @@ onMounted(() => {
 .navbar__search-btn:hover {
   color: var(--color-text-primary);
   background: rgba(255, 255, 255, 0.06);
+}
+
+.navbar__user-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: var(--space-2);
+}
+
+.navbar__user-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.navbar__username {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+}
+
+.navbar__logout-btn {
+  padding: 4px;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+}
+
+.navbar__logout-btn:hover {
+  color: var(--color-error);
 }
 
 .navbar__mobile-toggle {
