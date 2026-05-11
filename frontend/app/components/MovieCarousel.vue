@@ -2,35 +2,27 @@
   <section class="carousel-section" :id="`carousel-${sectionId}`">
     <div class="carousel-section__header container">
       <h2 class="carousel-section__title">{{ title }}</h2>
-      <div class="carousel-section__header-right">
-        <NuxtLink v-if="showSeeMore" :to="seeMoreLink || '/movies'" class="carousel-section__see-more">
-          See more
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <div class="carousel-section__nav">
+        <button
+          class="carousel-section__arrow"
+          :disabled="!canScrollLeft"
+          @click="scrollBy(-1)"
+          :aria-label="`Scroll ${title} left`"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button
+          class="carousel-section__arrow"
+          :disabled="!canScrollRight"
+          @click="scrollBy(1)"
+          :aria-label="`Scroll ${title} right`"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="9 18 15 12 9 6" />
           </svg>
-        </NuxtLink>
-        <div class="carousel-section__nav">
-          <button
-            class="carousel-section__arrow"
-            :disabled="!canScrollLeft"
-            @click="scrollBy(-1)"
-            :aria-label="`Scroll ${title} left`"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <button
-            class="carousel-section__arrow"
-            :disabled="!canScrollRight"
-            @click="scrollBy(1)"
-            :aria-label="`Scroll ${title} right`"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-        </div>
+        </button>
       </div>
     </div>
 
@@ -65,8 +57,6 @@ const props = defineProps<{
   title: string;
   movies: Movie[];
   sectionId?: string;
-  showSeeMore?: boolean;
-  seeMoreLink?: string;
 }>();
 
 const scrollContainer = ref<HTMLElement | null>(null);
@@ -102,27 +92,6 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   margin-bottom: var(--space-3);
-}
-
-.carousel-section__header-right {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-.carousel-section__see-more {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color var(--transition-fast);
-}
-
-.carousel-section__see-more:hover {
-  color: var(--color-text-primary);
 }
 
 .carousel-section__title {
