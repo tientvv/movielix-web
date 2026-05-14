@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="assets/logo.png" alt="MovieLix Logo" width="200"/>
+  <a href="https://movielix.neytrix.app/">
+    <img src="assets/logo.png" alt="MovieLix Logo" width="200"/>
+  </a>
 </p>
 
 A modern movie streaming platform built for speed and simplicity.  
